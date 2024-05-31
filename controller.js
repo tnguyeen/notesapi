@@ -58,10 +58,7 @@ export async function resister(req, res) {
   return res.status(201).json({
     status: "succeed",
     message: "Create User Successfully",
-    data: {
-      user: newUser,
-      accessToken: accesstoken,
-    },
+    data: { ...newUser._doc, accessToken: accesstoken },
   });
 }
 
@@ -96,10 +93,7 @@ export async function login(req, res) {
     return res.status(200).json({
       status: "succeed",
       message: "Login Successfully",
-      data: {
-        user: isUser,
-        accessToken: accesstoken,
-      },
+      data: { ...isUser._doc, accessToken: accesstoken },
     });
   }
 }
