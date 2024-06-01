@@ -4,18 +4,12 @@ import User from "./models/userModel.js";
 // 200ok 201created 202accepted 400badreq 401unauth 404notfound
 // Create Account
 export async function resister(req, res) {
-  const { fullname, username, email, password } = req.body;
+  const { fullname, email, password } = req.body;
 
   if (!fullname) {
     return res.status(400).json({
       status: "failed",
       message: "fullname is required",
-    });
-  }
-  if (!username) {
-    return res.status(400).json({
-      status: "failed",
-      message: "username is required",
     });
   }
   if (!email) {
@@ -38,17 +32,9 @@ export async function resister(req, res) {
       message: "email already exist ",
     });
   }
-  const isUser2 = await User.findOne({ username: username });
-  if (isUser2) {
-    return res.status(400).json({
-      status: "failed",
-      message: "username already exist ",
-    });
-  }
 
   const newUser = new User({
     fullname,
-    username,
     email,
     password,
   });
