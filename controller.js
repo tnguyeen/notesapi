@@ -110,7 +110,10 @@ export async function getNotesByUserId(req, res) {
   }
 
   try {
-    const notes = await Note.find({ userId: userId })
+
+    // const sort = { length: -1 }
+    // const limit = 3
+    const notes = await Note.find({ userId })
     if (!notes) {
       return res.status(404).json({
         status: "failed",
