@@ -1,11 +1,11 @@
-import express from "express"
-import cors from "cors"
-import mongoose from "mongoose"
-import dotenv from "dotenv"
-import jwt from "jsonwebtoken"
-import bp from "body-parser"
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+import bp from "body-parser";
 
-import authenticateToken from "./utils.js"
+import authenticateToken from "./utils.js";
 import {
   resister,
   login,
@@ -13,44 +13,46 @@ import {
   createNote,
   modifyNote,
   deleteNote,
-} from "./controller.js"
+  getNoteByNoteId,
+} from "./controller.js";
 
-const app = express()
-dotenv.config({ path: "./.env" })
+const app = express();
+dotenv.config({ path: "./.env" });
 
 // env
-const PORT = process.env.PORT
-const DB_STRING = process.env.DB_STRING
+const PORT = process.env.PORT;
+const DB_STRING = process.env.DB_STRING;
 
 // App use
 app.use(
   cors({
     origin: "*",
   })
-)
-app.use(express.json())
-app.use(bp.urlencoded({ extended: true }))
+);
+app.use(express.json());
+app.use(bp.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
-  res.json({ data: "hello" })
-})
+  res.json({ data: "hello" });
+});
 
 // routes
-app.post("/createAccount", resister)
-app.post("/login", login)
+app.post("/createAccount", resister);
+app.post("/login", login);
 
-app.get("/get-note", authenticateToken, getNotesByUserId)
-app.post("/create-note", authenticateToken, createNote)
-app.put("/modify-note/:noteId", authenticateToken, modifyNote)
-app.delete("/delete-note/:noteId", authenticateToken, deleteNote)
+app.get("/get-note", authenticateToken, getNotesByUserId);
+app.get("/get-one-note", authenticateToken, getNoteByNoteId);
+app.post("/create-note", authenticateToken, createNote);
+app.put("/modify-note/:noteId", authenticateToken, modifyNote);
+app.delete("/delete-note/:noteId", authenticateToken, deleteNote);
 
 // Connect DB
 mongoose
   .connect(DB_STRING)
   .then(() => {
     app.listen(PORT, () => {
-      console.log(`Connectted. Server Started at ${PORT}`)
-    })
+      console.log(`Connectted. Server Started at ${PORT}`);
+    });
   })
   .catch((err) => {
-    console.log(err)
-  })
+    console.log(err);
+  });
