@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
 app.post("/createAccount", resister);
 app.post("/login", login);
 
-app.get("/get-note", authenticateToken, getNotesByUserId);
+app.get("/get-note", getNotesByUserId);
 app.get("/get-one-note", authenticateToken, getNoteByNoteId);
 app.post("/create-note", authenticateToken, createNote);
 app.put("/modify-note/:noteId", authenticateToken, modifyNote);
